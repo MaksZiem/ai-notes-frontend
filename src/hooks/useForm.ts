@@ -1,23 +1,27 @@
-import { useForm } from 'react-hook-form'
+import { useForm, type FieldValues, type UseFormReturn } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { z } from 'zod'
+import type { BaseSyntheticEvent } from 'react'
 
-export function useFormWithMutation<T extends z.ZodTypeAny>(
-  schema: T,
-  mutationFn: (values: z.infer<T>) => Promise<unknown>,
+export function useFormWithMutation<T extends FieldValues, TData = void>(
+  schema: z.ZodType<T>,
+  mutationFn: (values: T) => Promise<TData>,
   options?: {
-    onSuccess?: () => void
-    onError?: (error: unknown) => void
+    onSuccess?: (data: TData) => void
+    onError?: (error: Error) => void
   }
-) {
-  type FormValues = z.infer<T>
-
-  const form = useForm<FormValues>({
+): {
+  form: UseFormReturn<T>
+  onSubmit: (e?: BaseSyntheticEvent) => Promise<void>
+  isLoading: boolean
+  error: Error | null
+} {
+  const form = useForm<T>({
     resolver: zodResolver(schema),
   })
 
-  const mutation = useMutation({
+  const mutation = useMutation<TData, Error, T>({
     mutationFn,
     onSuccess: options?.onSuccess,
     onError: options?.onError,
