@@ -1,6 +1,5 @@
-export interface UserRole {
-  role: 'USER' | 'ADMIN'
-}
+// types/user.ts
+export type UserRole = 'USER' | 'ADMIN'
 
 export interface User {
   id: number;

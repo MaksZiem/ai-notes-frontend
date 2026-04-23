@@ -2,11 +2,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import { PermissionsProvider } from './context/PermissionsContext'
-import LoginPage from './pages/LoginPage'
+import LoginPage from './pages/Auth/LoginPage'
 import { PrivateRoute } from './components/routes/PrivateRoute'
 import { AdminRoute } from './components/routes/AdminRoute'
 import NotesPage from './pages/NotesPage'
 import AdminPage from './pages/AdminPage'
+import RegisterPage from './pages/Auth/RegisterPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,6 +23,7 @@ export default function App() {
           <PermissionsProvider>
             <Routes>
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
 
               <Route element={<PrivateRoute />}>
                 <Route path="/notes" element={<NotesPage />} />

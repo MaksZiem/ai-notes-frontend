@@ -4,7 +4,7 @@ import { api } from "../api/client"
 interface AuthState {
   token: string | null
   login: (email: string, password: string) => Promise<void>
-  signup: (email: string, password: string) => Promise<void>
+  signup: (email: string, password: string, name: string, surname: string) => Promise<void>
   logout: () => void
 }
 
@@ -21,8 +21,8 @@ export function AuthProvider({children}: {children: ReactNode}) {
     setToken(data.access_token)
   }
 
-  const signup = async (email: string, password: string) => {
-    const { data } = await api.post('/auth/signup', { email, password })
+  const signup = async (email: string, password: string, name: string, surname: string) => {
+    const { data } = await api.post('/auth/signup', { email, password, name, surname })
     localStorage.setItem('token', data.access_token)
     setToken(data.access_token)
   }
