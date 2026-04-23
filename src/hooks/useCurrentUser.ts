@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 interface User {
   id: number;
   email: string;
-  isAdmin: boolean;
+  role: string;
 }
 
 export function useCurrentUser() {

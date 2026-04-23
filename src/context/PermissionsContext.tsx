@@ -12,7 +12,7 @@ export function PermissionsProvider({children}: {children:  ReactNode}) {
   const {data: User, isLoading} = useCurrentUser()
 
   return (
-    <PermissionsContext.Provider value={{ isAdmin: !!User?.isAdmin, isLoading }}>
+    <PermissionsContext.Provider value={{ isAdmin: User?.role === 'ADMIN', isLoading }}>
       {children}
     </PermissionsContext.Provider>
   )
